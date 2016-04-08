@@ -27,12 +27,12 @@ class Connect {
 	//@var DB Connection
 	private $conn = false;
 	
-	protected function get_connect(){ return $this->conn; }
+	public function get_connect(){ return $this->conn; }
 	
 	/**
 	 * Connect to Database
 	 */
-	protected function connect( $type = false ){
+	public function connect( $type = false ){
 		
 		$user = 'mcare_api';//( $type == 'api' )? $this->mcare_api_user : $this->mcare_api_read_user;
 		
@@ -54,7 +54,7 @@ class Connect {
 		
 	} // end connect
 	
-	protected function close(){
+	public function close(){
 		
 		$this->conn->close();
 		

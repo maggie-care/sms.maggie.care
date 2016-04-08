@@ -1,21 +1,25 @@
 <?php namespace mcaresms;
 
-require_once 'connect.class.php';
-
 require_once 'request.class.php';
 
-class Requests extends Connect {
+class Requests {
+	
+	protected $connect;
 	
 	protected $requests = array();
+	
+	public function __construct( $connect ){
+		
+		$this->connect = $connect;
+		
+	} // end __construct
 	
 	public function get_requests(){ return $this->requests;}
 	
 	
-	public function query(){
+	public function set_requests(){
 		
-		$this->connect('api');
-		
-		$mysqli = $this->get_connect();
+		$mysqli = $this->connect->get_connect();
 		
 		$sql = 'SELECT * FROM maggiecare_open_requests';
 		
@@ -23,11 +27,11 @@ class Requests extends Connect {
 		
 		while( $row = $query->fetch_assoc() ){
 			
-			$request = new Request();
+			$request = new Request( $this->connect );
 			
 			$request->set_sql_request( $row );
 			
-			$this->requests[] = $request;
+			$this->requests[ $row['request_id'] ] = $request;
 			
 		};	
 		
