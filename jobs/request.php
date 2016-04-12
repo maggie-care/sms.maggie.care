@@ -1,51 +1,93 @@
 <?php namespace mcaresms;
 
-//require_once dirname( dirname( __FILE__ ) ) . '/classes/authorize.class.php';
-
-require_once dirname( dirname( __FILE__ ) ) . '/classes/requests.class.php';
-
-require_once dirname( dirname( __FILE__ ) ) . '/classes/connect.class.php';
-
 class Request_Job {
 	
 	private $connect;
 	
 	public function __construct(){
 		
-		ini_set('display_errors', 1);
-		
-		ini_set('display_startup_errors', 1);
-
-		error_reporting(E_ALL);
-		
-		$this->connect = new Connect();
-		
-		$this->connect->connect();
-		
-		$this->do_request();
-		
-		//$authorize = new Authorize( $this->connect );
-		
-		//if( $authorize->authorize_requests( 1 ) ){
-		
-			//$this->do_request();
-		
-		//} else {
-			
-			//die('Invalid Request');
-			
-		//} // end if
+		$this->do_requests();
 		
 	} // end __construct
 	
-	private function do_request(){
+	
+	private function do_requests(){
 		
-		$requests = new Requests( $this->connect );
+		$requests = $this->get_requests();
 		
-		$requests->set_requests();
+		if ( $requests ){
+			
+			foreach( $requests as $request ){
+				
+				$this->the_request( $request );
+				
+			} // end foreach
+			
+		} // end if
 		
 	} // end do_request
 	
+	
+	private function the_request( $request ){
+		
+		if ( $request->is_accepted_request() ){
+			
+			echo 'Yeah Cool, This request is accepted';
+			
+		} else {
+			
+			$request->set_request_provider();
+			
+			if ( $request->get_request_provider() ){
+				
+				$request->send_request();
+				
+			} else {
+				
+				echo 'Looks like there arent any available providers<br>';
+				
+			} // end if
+			
+		} // end if
+		
+		echo '<hr>';
+		
+	}
+	
+	
+	
+	private function get_requests(){
+		
+		require_once dirname( dirname( __FILE__ ) ) . '/classes/requests.class.php';
+		
+		require_once dirname( dirname( __FILE__ ) ) . '/classes/connect.class.php';
+		
+		$requests = array();
+		
+		$connect = new Connect();
+		
+		$db_requests = $connect->select( 'SELECT * FROM maggiecare_open_requests' );
+		
+		if ( $db_requests ){
+			
+			foreach( $db_requests as $db_request ){
+				
+				$request = new Request();
+				
+				$request->set_sql_request( $db_request );
+				
+				$requests[  $request->get_request_id()  ] = $request;
+				
+			} // end foreach
+			
+		} // end if
+		
+		return $requests;
+		
+	} // end 
+	
+	
+
 	
 }
 $request_job = new Request_Job();

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AccessToken.php" server="ftp.contributelist.com//" local="131048887218595743" remote="131048888400000000" Dst="2" />
+<file name="Capability.php" server="ftp.contributelist.com//" local="131048887219321238" remote="131048888400000000" Dst="2" />
+<file name="AutoPagingIterator.php" server="ftp.contributelist.com//" local="131048887218945983" remote="131048888400000000" Dst="2" />
+<file name="HttpException.php" server="ftp.contributelist.com//" local="131048887219446322" remote="131048888400000000" Dst="2" />
+<file name="HttpStream.php" server="ftp.contributelist.com//" local="131048887219656469" remote="131048888400000000" Dst="2" />
+<file name="InstanceResource.php" server="ftp.contributelist.com//" local="131048887220226856" remote="131048888400000000" Dst="2" />
+<file name="IPMessagingInstanceResource.php" server="ftp.contributelist.com//" local="131048887219796565" remote="131048888400000000" Dst="2" />
+<file name="IPMessagingListResource.php" server="ftp.contributelist.com//" local="131048887219946667" remote="131048888400000000" Dst="2" />
+<file name="JWT.php" server="ftp.contributelist.com//" local="131048887220431998" remote="131048888400000000" Dst="2" />
+<file name="ListResource.php" server="ftp.contributelist.com//" local="131048887220767232" remote="131048888400000000" Dst="2" />
+<file name="LookupsListResource.php" server="ftp.contributelist.com//" local="131048887221097461" remote="131048888400000000" Dst="2" />
+<file name="MonitorInstanceResource.php" server="ftp.contributelist.com//" local="131048887221237554" remote="131048888400000000" Dst="2" />
+<file name="LookupsInstanceResource.php" server="ftp.contributelist.com//" local="131048887220902320" remote="131048888400000000" Dst="2" />
+<file name="MonitorListResource.php" server="ftp.contributelist.com//" local="131048887221372642" remote="131048888400000000" Dst="2" />
+<file name="NextGenInstanceResource.php" server="ftp.contributelist.com//" local="131048887221512740" remote="131048888400000000" Dst="2" />
+<file name="NextGenListResource.php" server="ftp.contributelist.com//" local="131048887221732891" remote="131048888400000000" Dst="2" />
+<file name="NumberType.php" server="ftp.contributelist.com//" local="131048887221903013" remote="131048888400000000" Dst="2" />
+<file name="Page.php" server="ftp.contributelist.com//" local="131048887222118153" remote="131048888400000000" Dst="2" />
+<file name="PartialApplicationHelper.php" server="ftp.contributelist.com//" local="131048887222716816" remote="131048888400000000" Dst="2" />
+<file name="PricingInstanceResource.php" server="ftp.contributelist.com//" local="131048887222851910" remote="131048888400000000" Dst="2" />
+<file name="PricingListResource.php" server="ftp.contributelist.com//" local="131048887223043709" remote="131048888400000000" Dst="2" />
+<file name="RequestValidator.php" server="ftp.contributelist.com//" local="131048887223263863" remote="131048888400000000" Dst="2" />
+<file name="Resource.php" server="ftp.contributelist.com//" local="131048887223604096" remote="131048888400000000" Dst="2" />
+<file name="RestException.php" server="ftp.contributelist.com//" local="131048887223804236" remote="131048888400000000" Dst="2" />
+<file name="SIPListResource.php" server="ftp.contributelist.com//" local="131048887223974352" remote="131048888400000000" Dst="2" />
+<file name="TaskRouterInstanceResource.php" server="ftp.contributelist.com//" local="131048887224124458" remote="131048888400000000" Dst="2" />
+<file name="TaskRouterListResource.php" server="ftp.contributelist.com//" local="131048887224274579" remote="131048888400000000" Dst="2" />
+<file name="TimeRangeResource.php" server="ftp.contributelist.com//" local="131048887224464685" remote="131048888400000000" Dst="2" />
+<file name="TinyHttp.php" server="ftp.contributelist.com//" local="131048887224694842" remote="131048888400000000" Dst="2" />
+<file name="TrunkingInstanceResource.php" server="ftp.contributelist.com//" local="131048887224834941" remote="131048888400000000" Dst="2" />
+<file name="TrunkingListResource.php" server="ftp.contributelist.com//" local="131048887225015064" remote="131048888400000000" Dst="2" />
+<file name="Twiml.php" server="ftp.contributelist.com//" local="131048887225265229" remote="131048888400000000" Dst="2" />
+<file name="UsageResource.php" server="ftp.contributelist.com//" local="131048887225435352" remote="131048888400000000" Dst="2" />
+<file name="WorkflowConfiguration.php" server="ftp.contributelist.com//" local="131048887225726571" remote="131048888400000000" Dst="2" />
+</dwsync>

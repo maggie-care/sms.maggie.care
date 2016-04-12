@@ -5,59 +5,65 @@
  * @version 0.0.1
  */
 class Connect {
-	
-	//@var DB name
-	private $name = 'maggiecare';
-	
-	//@var DB host
-	private $host = 'localhost';
-	
-	//@var DB all priv user
-	private $mcare_api_user = 'mcare_api';
-	
-	//@var DB all priv pwd
-	private $mcare_api_pwd = 'eL}{-u$?Mo*;k&I}oc';
-	
-	//@var DB SELECT only user
-	private $mcare_api_read_user = 'mcare_api_read';
-	
-	//@var DB SELECT only pwd
-	private $mcare_api_read_pwd = 'PLf2;5aJ)cV2wNy=Nw';
-	
-	//@var DB Connection
-	private $conn = false;
-	
-	public function get_connect(){ return $this->conn; }
-	
-	/**
-	 * Connect to Database
-	 */
-	public function connect( $type = false ){
-		
-		$user = 'mcare_api';//( $type == 'api' )? $this->mcare_api_user : $this->mcare_api_read_user;
-		
-		$pwd = 'eL}{-u$?Mo*;k&I}oc';//( $type == 'api' )? $this->mcare_api_pwd : $this->mcare_api_read_pwd;
-		
-		$conn = new \mysqli( $this->host, $user, $pwd, $this->name );
-		
-		if ( $conn->connect_error ) {
-			
-			echo 'Error: No connection';
-			
-            die ();
-			
-        } else {
-			
-			$this->conn = $conn;
 
+	//@var database connection
+	protected static $connection;
+	
+	public function connect(){
+		
+		if ( ! isset( self::$connection ) ) { 
+			
+			$config = parse_ini_file('/home/djbleile/appconfig/maggiecare/dbconnect.ini');
+			
+			self::$connection = new \mysqli( 'localhost', $config['username'], $config['password'], $config['dbname'] );
+			
+		} // end if
+		
+		// If connection was not successful, handle the error
+        if( self::$connection === false ) {
+			
+            // Handle error - notify administrator, log to a file, show an error screen, etc.
+            return false;
+			
         } // end if
 		
-	} // end connect
+		return self::$connection;  
+		
+	} // end __construct 
 	
-	public function close(){
+	public function query($query) {
 		
-		$this->conn->close();
+        // Connect to the database
+        $connection = $this->connect();
+
+        // Query the database
+        $result = $connection->query( $query );
+
+        return $result;
 		
-	} // end close
+    }
+	
+	
+	public function select( $query ) {
+		
+        $rows = array();
+		
+        $result = $this->query( $query );
+		
+        if( $result === false ) { 
+		
+            return false;
+			
+        }
+		
+        while ( $row = $result -> fetch_assoc() ) {
+			
+            $rows[] = $row;
+			
+        } // end while
+		
+        return $rows;
+		
+    } // end select
 	
 }

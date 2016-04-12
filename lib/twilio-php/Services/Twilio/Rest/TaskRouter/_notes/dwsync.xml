@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="Activities.php" server="ftp.contributelist.com//" local="131048887248632363" remote="131048888400000000" Dst="2" />
+<file name="Activity.php" server="ftp.contributelist.com//" local="131048887248982252" remote="131048888400000000" Dst="2" />
+<file name="Event.php" server="ftp.contributelist.com//" local="131048887255895621" remote="131048888400000000" Dst="2" />
+<file name="Events.php" server="ftp.contributelist.com//" local="131048887256275894" remote="131048888400000000" Dst="2" />
+<file name="Reservation.php" server="ftp.contributelist.com//" local="131048887256507295" remote="131048888400000000" Dst="2" />
+<file name="Reservations.php" server="ftp.contributelist.com//" local="131048887256657403" remote="131048888400000000" Dst="2" />
+<file name="Statistics.php" server="ftp.contributelist.com//" local="131048887256847531" remote="131048888400000000" Dst="2" />
+<file name="Task.php" server="ftp.contributelist.com//" local="131048887257007643" remote="131048888400000000" Dst="2" />
+<file name="TaskQueue.php" server="ftp.contributelist.com//" local="131048887257157746" remote="131048888400000000" Dst="2" />
+<file name="TaskQueues.php" server="ftp.contributelist.com//" local="131048887257457951" remote="131048888400000000" Dst="2" />
+<file name="TaskQueuesStatistics.php" server="ftp.contributelist.com//" local="131048887257598050" remote="131048888400000000" Dst="2" />
+<file name="TaskQueueStatistics.php" server="ftp.contributelist.com//" local="131048887257287832" remote="131048888400000000" Dst="2" />
+<file name="Tasks.php" server="ftp.contributelist.com//" local="131048887257758166" remote="131048888400000000" Dst="2" />
+<file name="Worker.php" server="ftp.contributelist.com//" local="131048887257888249" remote="131048888400000000" Dst="2" />
+<file name="Workers.php" server="ftp.contributelist.com//" local="131048887258188451" remote="131048888400000000" Dst="2" />
+<file name="WorkersStatistics.php" server="ftp.contributelist.com//" local="131048887258318537" remote="131048888400000000" Dst="2" />
+<file name="WorkerStatistics.php" server="ftp.contributelist.com//" local="131048887258018335" remote="131048888400000000" Dst="2" />
+<file name="Workflow.php" server="ftp.contributelist.com//" local="131048887258458630" remote="131048888400000000" Dst="2" />
+<file name="Workflows.php" server="ftp.contributelist.com//" local="131048887258748831" remote="131048888400000000" Dst="2" />
+<file name="WorkflowStatistics.php" server="ftp.contributelist.com//" local="131048887258588725" remote="131048888400000000" Dst="2" />
+<file name="Workspace.php" server="ftp.contributelist.com//" local="131048887258888927" remote="131048888400000000" Dst="2" />
+<file name="Workspaces.php" server="ftp.contributelist.com//" local="131048887259179126" remote="131048888400000000" Dst="2" />
+<file name="WorkspaceStatistics.php" server="ftp.contributelist.com//" local="131048887259019016" remote="131048888400000000" Dst="2" />
+</dwsync>
