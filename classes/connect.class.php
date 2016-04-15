@@ -1,4 +1,4 @@
-<?php namespace mcaresms;
+<?php
 /**
  * Abstract class for DB connects\
  * @author Danial Bleile
@@ -15,7 +15,7 @@ class Connect {
 			
 			$config = parse_ini_file('/home/djbleile/appconfig/maggiecare/dbconnect.ini');
 			
-			self::$connection = new \mysqli( 'localhost', $config['username'], $config['password'], $config['dbname'] );
+			self::$connection = new mysqli( 'localhost', $config['username'], $config['password'], $config['dbname'] );
 			
 		} // end if
 		
@@ -42,6 +42,26 @@ class Connect {
         return $result;
 		
     }
+	
+	public function insert( $query ){
+		
+		// Connect to the database
+        $connection = $this->connect();
+		
+		// Query the database
+        $result = $connection->query( $query );
+		
+		if ( $result ){
+			
+			return $connection->insert_id;
+			
+		} else {
+			
+			return false;
+			
+		} // end if
+		
+	} // end insert
 	
 	
 	public function select( $query ) {

@@ -1,6 +1,6 @@
-<?php namespace mcaresms;
+<?php
 
-require_once dirname( dirname( __FILE__ ) ) . '/lib/twilio-php/Services/Twilio.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/lib/twilio-php/Services/Twilio.php';
 
 class Mcare_Twilio {
 	
@@ -41,9 +41,15 @@ class Mcare_Twilio {
 		
 		$sms = $connect->account->messages->sendMessage( $from , $number , $message );
 		
-		echo 'Message Set<br>';
-		
 	} // end send_sms
+	
+	public function send_user_invite( $account , $user ){
+		
+		$message = '[owner] would like to invite you to their caregiver network. Reply "YES" to join or "NO" to decline. Learn more at http://maggie.care';
+		
+		$sms = $this->send_sms( $user->get_phone(), $message );
+		
+	} // end send_user_invite
 	
 	
 }

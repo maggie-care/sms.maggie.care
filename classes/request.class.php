@@ -169,7 +169,7 @@ class Request {
 				
 				echo 'Request updated<br>';
 				
-				require_once 'mcare-twilio.php';
+				require_once 'mcare-twilio.class.php';
 				
 				$twilio = new Mcare_Twilio();
 				
