@@ -2,6 +2,8 @@
 
 class Account {
 	
+	protected $connect;
+	
 	private $acct_id = false;
 	
 	private $opened = false;
@@ -9,6 +11,15 @@ class Account {
 	private $api_key = false;
 	
 	private $users = array();
+	
+	public function __construct(){
+		
+		require_once 'connect.class.php';
+		
+		$this->connect = new Connect();
+		
+	} // end __construct
+	
 	
 	
 	public function get_acct_id(){ return $this->acct_id; }
@@ -124,7 +135,40 @@ class Account {
 		
 	}
 	
-	public function add_acct_user( $user_id , $role_id , $acct_id = false ){
+	public function invite_user( $user_settings ){
+		
+		$nums = array();
+		
+		$name = ( ! empty( $user_settings['name'] ) ) ? $user_settings['name'] : '';
+		$role_id = ( ! empty( $user_settings['role_id'] ) ) ?  $user_settings['role_id'] : 4;
+		$phone = ( ! empty( $user_settings['phone'] ) ) ? $user_settings['phone'] : '';
+		$email = ( ! empty( $user_settings['email'] ) ) ? $user_settings['email'] : '';
+		
+		$invite_user = $this->connect->select( "SELECT * FROM maggiecare_users WHERE phone='$phone'");
+		
+		if ( $invite_user ){
+			
+			$user_id = $invite_user[0]['user_id'];
+			
+			$user_accts = $this->connect->select( "SELECT * FROM maggiecare_acct_users WHERE user_id='$user_id'");
+			
+			if ( $user_accts ){
+				
+				foreach( $user_accts as $user_acct ){
+				}// end foreach
+				
+			} // end if
+			
+			var_dump( $user_accts );
+			
+		} else {
+			
+			echo 'Was not found';
+		}
+
+	} // end $user
+	
+	/*public function add_acct_user( $user_id , $role_id , $acct_id = false ){
 		
 		if ( ! $acct_id ) $acct_id = $this->get_acct_id();
 		
@@ -148,9 +192,6 @@ class Account {
 			
 		}
 		
-	}
-	
-	
-	
+	}*/
 	
 } // end Account

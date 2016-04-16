@@ -2,7 +2,7 @@
 
 class Request {
 	
-	private $request_id = false;
+	/*private $request_id = false;
 	
 	private $acct_id = false;
 	
@@ -264,6 +264,6 @@ class Request {
 			
 		};
 		
-	}
+	}*/
 	
 }

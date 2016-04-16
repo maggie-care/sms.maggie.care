@@ -2,7 +2,161 @@
 
 class User {
 	
-	private $user_id = false;
+	protected $connect;
+	
+	protected $user_id = false;
+	
+	protected $acct_id = false;
+	
+	protected $status = false;
+	
+	protected $role_id = false;
+	
+	protected $phone = false;
+	
+	protected $sms_number = false;
+	
+	public function __construct( ){
+		
+		require_once 'connect.class.php';
+		
+		$this->connect = new Connect();
+		
+	} // end __construct
+	
+	
+	public function get_user_id(){ return $this->user_id; } 
+	public function get_role_id(){ return $this->role_id; } 
+	public function get_name(){ return $this->name; } 
+	public function get_phone(){ return $this->phone; }
+	
+	
+	public function set_user_db( $user ){
+		
+		$this->user_id = $user['user_id'];
+		
+		$this->name = $user['user_name'];
+				
+		$this->phone = $user['phone'];
+			
+		$this->created  = $user['created'];
+		
+	} // end set_user_db
+	
+	public function set_user_by_id( $user_id ){
+		
+		$user = $this->connect->select( "SELECT * FROM maggiecare_users WHERE user_id='$user_id'" );
+		
+		if ( $user ){
+			
+			$this->set_user_db( $user );
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		}// end if
+		
+	} // end set_user_by_id
+	
+	
+	public function create_set_user( $user_settings ){
+		
+		$phone = ( ! empty( $user_settings['phone'] ) ) ? $user_settings['phone'] : '';
+		
+		$this->get_clean_phone( $phone );
+		
+		if ( $user = $this->get_user_by_phone( $phone ) ){
+			
+			echo 'User found by phone';
+			
+			$this->set_user_db( $user );
+			
+			return true;	
+			
+		} else {
+			
+			$name = ( ! empty( $user_settings['name'] ) ) ? $user_settings['name'] : '';
+			
+			if ( $user_id = $this->insert_user( $name , $phone ) ){
+				
+				if ( $this->set_user_by_id( $user_id ) ){
+					
+					return true;
+					
+				} else {
+					
+					return false;
+					
+				} // end if
+				
+			} else {
+				
+				return false;
+				
+			} // end if
+			
+		} // end if
+		
+	}  // end create_set_user
+	
+	
+	public function get_user_by_phone( $phone ){
+		
+		$this->get_clean_phone( $phone );
+	
+		$user = $this->connect->select( "SELECT * FROM maggiecare_users WHERE phone='$phone'" );
+		
+		if ( $user ){
+			
+			return $user[0];
+			
+		} else {
+			
+			return false;
+			
+		} // end if
+		
+	} // end get_user_by_phone
+	
+	
+	public function get_clean_phone( &$phone ){
+		
+		$phone = str_replace( array('-',' ','(',')' ) , '' , $phone );
+		
+		return $phone;
+		
+	} // end get_clean_phone
+	
+	
+	public function insert_user( $name , $phone ){
+		
+		$this->get_clean_phone( $phone );
+		
+		$api_key = md5(microtime().rand());
+		
+		$sql = "INSERT INTO maggiecare_users (user_name,phone,api_key,created) VALUES ('$name','$phone','$api_key',now())";
+		
+		$result = $this->connect->insert( $sql );
+		
+		if ( $result !== false ){
+			
+			return $result;
+			
+		} else {
+			
+			return false;
+			
+		} // end if
+		
+	} // end
+	
+	
+	
+	
+	/*private $user_id = false;
 	
 	private $acct_id = false;
 	
@@ -16,8 +170,69 @@ class User {
 	public function get_role_id(){ return $this->role_id; } 
 	public function get_name(){ return $this->name; } 
 	public function get_phone(){ return $this->phone; }
+	*/
 	
-	public function set_db_user( $row , $profile_type = 'basic' ){
+	/*public function set_user_by_phone( $phone , $acct_id = false ){
+		
+		$phone = $this->get_clean_phone( $phone );
+		
+		require_once 'connect.class.php';
+			
+		$connect = new Connect();
+	
+		$user = $connect->select( "SELECT * FROM maggiecare_users WHERE phone='$phone'" );
+		
+		if ( $user[0] ){
+			
+			$this->set_user_from_db( $user[0] );
+			
+			if ( $acct_id ){
+			
+				$this->set_user_acct( $acct_id );
+				
+			} // end if
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		} // end if
+		
+	} // end set_user_by_phone
+	
+	
+	public function set_user_from_db( $row ){
+		
+		$this->name = $row['user_name'];
+				
+		$this->phone = $row['phone'];
+			
+		$this->created  = $row['created'];
+		
+	} // end
+	
+	public function set_user_acct( $acct_id ){
+	
+		$user = $this->connect->select( "SELECT * FROM maggiecare_acct_users WHERE acct_id='$acct_id' AND user_id='$this->user_id'" );
+		
+		var_dump( $user );
+		
+	}
+	
+	
+	public function get_clean_phone( $phone ){
+		
+		$phone = str_replace( array('-',' ','(',')' ) , '' , $phone );
+		
+		return $phone;
+		
+	} // end get_clean_phone
+	
+	
+	
+	/*public function set_db_user( $row , $profile_type = 'basic' ){
 		
 		$this->user_id = $row['user_id'];
 		
@@ -79,6 +294,8 @@ class User {
 		
 	}
 	
+	public function set_user_acct(
+	
 	public function set_user_from_db( $row , $full_user = true ){
 		
 		$this->name = $row['user_name'];
@@ -126,7 +343,7 @@ class User {
 			
 		} // end if
 		
-	} // end set_user*/
+	} // end set_user
 	
 	public function invite_user( $account , $user_settings , $send_invite = true ){
 		
@@ -258,6 +475,6 @@ class User {
 			
 		} // end if
 		
-	} // end get_user_invite
+	} // end get_user_invite*/
 	
 }
