@@ -4,11 +4,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/lib/twilio-php/Services/Twilio.php';
 
 class Mcare_Twilio {
 	
-	protected $number = '385-393-1713';
+	protected $numbers = array( '385-393-1713' , '385-222-3539' , '385-222-3430' );
 	
 	protected static $client;
 	
-	public function get_number(){ return $this->number; }
+	public function get_numbers(){ return $this->numbers; }
 	
 	public function connect(){
 		
@@ -33,23 +33,17 @@ class Mcare_Twilio {
 		
 	} // end __construct
 	
-	public function send_sms( $number, $message, $from = false ){
+	public function send_sms( $user_number, $message, $sms_number ){
 		
 		$from = ( $from ) ? $from : $this->get_number();
 		
 		$connect = $this->connect();
 		
+		//var_dump( $user_number . ', ' .  $sms_number . ', ' . $message ); 
+		
 		$sms = $connect->account->messages->sendMessage( $from , $number , $message );
 		
 	} // end send_sms
-	
-	public function send_user_invite( $account , $user ){
-		
-		$message = '[owner] would like to invite you to their caregiver network. Reply "YES" to join or "NO" to decline. Learn more at http://maggie.care';
-		
-		$sms = $this->send_sms( $user->get_phone(), $message );
-		
-	} // end send_user_invite
 	
 	
 }

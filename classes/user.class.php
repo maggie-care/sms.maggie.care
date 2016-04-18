@@ -43,13 +43,19 @@ class User {
 		
 	} // end set_user_db
 	
-	public function set_user_by_id( $user_id ){
+	public function set_user_by_id( $user_id , $acct_id = false ){
 		
 		$user = $this->connect->select( "SELECT * FROM maggiecare_users WHERE user_id='$user_id'" );
 		
 		if ( $user ){
 			
-			$this->set_user_db( $user );
+			$this->set_user_db( $user[0] );
+			
+			if ( $acct_id ){
+				
+				$this->set_user_acct( $acct_id );
+				
+			} // end if
 			
 			return true;
 			
@@ -60,6 +66,15 @@ class User {
 		}// end if
 		
 	} // end set_user_by_id
+	
+	public function set_user_acct( $acct_id ){
+		
+		$user_id = $this->get_user_id();
+		
+		$acct = $this->connect->select( "SELECT * FROM maggiecare_acct_users WHERE user_id='$user_id' AND acct_id='$acct_id'" );
+		
+		
+	} 
 	
 	
 	public function create_set_user( $user_settings ){

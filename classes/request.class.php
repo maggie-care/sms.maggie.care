@@ -1,6 +1,68 @@
-<?php namespace mcaresms;
+<?php
 
 class Request {
+	
+	protected $connect;
+	
+	protected $twilio;
+	
+	protected $request_id;
+	
+	protected $type;
+	
+	protected $settings = array();
+	
+	protected $status;
+	
+	public function __construct(){
+		
+		require_once 'connect.class.php';
+		
+		require_once 'mcare-twilio.class.php';
+		
+		$this->connect = new Connect();
+		
+		$this->twilio = new Mcare_Twilio();
+		
+	} // end __construct
+	
+	
+	public function get_type(){ return $this->type; }
+	public function get_settings(){ return $this->settings; }
+	
+	
+	public function create_set( $acct_id , $type , $settings = array() , $status = 'pending' , $add_open = true ){
+		
+		$sql = "INSERT INTO maggiecare_requests (acct_id,type,status,created) VALUES ('$acct_id','$type','$status',now())";
+		
+		if ( $request_id = $this->connect->insert( $sql ) ){
+			
+			$this->type = $request_type;
+			
+			$this->request_id = $request_id;
+			
+			$this->settings = $settings;
+			
+			$this->status = $status;
+			
+			foreach( $settings as $setting_key => $setting_value ){
+				
+				$setting_id = $this->connect->insert( "INSERT INTO maggiecare_request_settings (request_id,s_key,s_value) VALUES ('$request_id','$setting_key','$setting_value' )" );
+				
+			} // end foreach
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		} // end if
+		
+	}
+	
+	public function send( $phone ,$sms_number , $settings ){
+	} // end send;
 	
 	/*private $request_id = false;
 	

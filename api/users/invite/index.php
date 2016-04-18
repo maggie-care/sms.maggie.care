@@ -36,27 +36,54 @@ class API_Invite_User {
 		
 		if ( $account->verify_access( $acct_id , $access_key ) ){
 			
+			$account->set_account_by_id( $acct_id );
+			
 			require_once $this->get_require_path() . 'classes/user.class.php';
 		
-			require_once $this->get_require_path() . 'classes/request.class.php';
+			require_once $this->get_require_path() . 'classes/invite_request.class.php';
 			
+			var_dump( $account->get_acct_owner() );
 			
 			$user = new User();
 			
-			$request = new Request();
-			
 			// Creates or sets a user
-			if ( $user->create_set_user( $this->get_user_settings() ) ){
+			/*if ( $user->create_set_user( $this->get_user_settings() ) ){
 				
-				if ( $request->invite_user( $account , $user ) ){
+				if ( $sms_number = $account->add_user_to_account( $user->get_user_id() , array( 'role_id' => $user->get_role_id() ) ) ){
+					
+					$request = new Invite_Request();
+					
+					$request_settings = array(
+						'acct_id' => $account->get_acct_id(),
+						'user_id' => $user->get_user_id(), 
+					);
+					
+					if ( $request->create_set( 'invite' , $request_settings ) ){
+						
+						$owner = $account->get_acct_owner();
+						
+						//$request->send( $user->get_phone() , $sms_number , array( 'owner' => $owner->get_name() ) );
+						
+					} else {
+						
+						echo 'Could not create request';
+						
+					};
+					
 				} else {
+					
+					echo 'Could not add user to account';
 				}
+				
+				//if ( $request->invite_user( $account , $user ) ){
+				//} else {
+				//}
 				
 			} else {
 				
 				echo 'user not created';
 				
-			}
+			}*/
 			
 			//require_once $this->get_require_path() . 'classes/user.class.php';
 				
