@@ -14,6 +14,10 @@ class Request {
 	
 	protected $status;
 	
+	
+	public function get_request_id(){ return $this->request_id; }
+	
+	
 	public function __construct(){
 		
 		require_once 'connect.class.php';
@@ -33,11 +37,11 @@ class Request {
 	
 	public function create_set( $acct_id , $type , $settings = array() , $status = 'pending' , $add_open = true ){
 		
-		$sql = "INSERT INTO maggiecare_requests (acct_id,type,status,created) VALUES ('$acct_id','$type','$status',now())";
+		$sql = "INSERT INTO maggiecare_requests (type,status,created) VALUES ('$type','$status',now())";
 		
 		if ( $request_id = $this->connect->insert( $sql ) ){
 			
-			$this->type = $request_type;
+			$this->type = $type;
 			
 			$this->request_id = $request_id;
 			
@@ -61,8 +65,59 @@ class Request {
 		
 	}
 	
+	public function insert_open_request( $acct_id , $user_number, $sms_number, $user_id, $request_id = false ){
+		
+		if ( ! $request_id ) $request_id = $this->get_request_id();
+		
+		$open_requests = "INSERT INTO maggiecare_open_requests (request_id,acct_id,user_number,sms_number,user_id,created) 
+						VALUES ('$request_id','$acct_id','$user_number','$sms_number','$user_id',now())";
+			
+		$result = $this->connect->insert( $open_requests );
+		
+	}
+	
+	public function delete_open_request( $request_id , $user_id = false ){
+		
+		if ( $user_id ){ 
+		
+			$sql = "DELETE FROM maggiecare_open_requests WHERE (request_id='$request_id' AND user_id='$user_id')";
+		
+		} else {
+			
+			$sql = "DELETE FROM maggiecare_open_requests WHERE request_id='$request_id'";
+			
+		}
+		
+		$this->connect->query( $sql );
+		
+	}
+	
+	public function update_request_status( $status ){
+		
+		$request_id = $this->get_request_id();
+		
+		$sql = "UPDATE maggiecare_requests SET status='$status',updated=now() WHERE request_id='$request_id'";
+		
+		$this->connect->update( $sql );
+		
+	}
+	
+	
 	public function send( $phone ,$sms_number , $settings ){
 	} // end send;
+	
+	
+	public function set_request_from_db( $row ){
+		
+		$this->type = $row['type'];
+			
+		$this->request_id = $row['request_id'];
+		
+		$this->settings = array();
+		
+		$this->status = $row['status'];
+		
+	} // end request
 	
 	/*private $request_id = false;
 	

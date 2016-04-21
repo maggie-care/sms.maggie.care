@@ -30,6 +30,20 @@ class Account {
 	
 	public function get_acct_owner() { return $this->acct_owner; }
 	
+	public function get_user( $id ) { 
+	
+		if ( array_key_exists( $id , $this->users ) ){
+			
+			return $this->users[ $id ];
+			
+		} else {
+			
+			return false;
+			
+		} // end if
+	
+	} // end get_user
+	
 	
 	public function verify_access( $acct_id , $access_key ){
 		
@@ -75,8 +89,6 @@ class Account {
 			
 			$this->set_acct_users();
 			
-			var_dump( $this->get_users() );
-			
 			return true;
 			
 		} else {
@@ -109,7 +121,9 @@ class Account {
 				
 				$user->set_user_by_id( $db_user['user_id'] , $acct_id );
 				
-				if ( $db_user['role_id'] === 1 ) $this->acct_owner = $user;
+				$user->set_user_db( $db_user );
+				
+				if ( $db_user['role_id'] == 1 ) $this->acct_owner = $user;
 				
 				$this->users[ $db_user['user_id'] ] = $user;
 				
@@ -140,8 +154,6 @@ class Account {
 		$result = $this->connect->insert( "INSERT INTO maggiecare_acct_users (user_id,acct_id,role_id,status,sms_number) 
 				VALUES ('$user_id','$acct_id','$role_id','$status','$sms_number')" );
 				
-				var_dump( $result );
-				
 		if ( $result ){
 			
 			return $sms_number;
@@ -153,6 +165,69 @@ class Account {
 		}
 		
 	} // end add_user_to_account
+	
+	
+	public function update_acct_user_status( $user_id , $status ){
+		
+		$acct_id = $this->get_acct_id();
+		
+		$sql = "UPDATE maggiecare_acct_users SET status='$status' WHERE ( user_id='$user_id' AND acct_id='$acct_id')";
+		
+		$this->connect->update( $sql );
+		
+	} // end update_acct_user_status
+	
+	
+	public function add_request( $request_id ){
+		
+		$acct_id = $this->get_acct_id();
+		
+		$result = $this->connect->insert( "INSERT INTO maggiecare_acct_requests (acct_id,request_id) 
+				VALUES ('$acct_id','$request_id')" );
+				
+		if ( $result !== false ){
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		}
+		
+	} // end add_request
+	
+	public function insert_notification( $msg , $status = 'pending', $role_id = 1 , $request_id = 0, $acct_id = false ){
+		
+		if ( ! $acct_id ) $acct_id = $this->get_acct_id();
+		
+		$msg = $this->connect->escape_string( $msg );
+		
+		$result = $this->connect->insert( "INSERT INTO maggiecare_acct_notifications (acct_id,request_id,role_id,msg,status,updated) 
+				VALUES ('$acct_id','$request_id','$role_id','$msg','$status',now())" );
+				
+		if ( $result !== false ){
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		}
+		
+	} // end insert_notification
+	
+	public function remove_acct_user( $user_id , $acct_id = false ){
+		
+		if ( ! $acct_id ) $acct_id = $this->get_acct_id();
+		
+		$sql = "DELETE FROM maggiecare_acct_users WHERE (acct_id='$acct_id' AND user_id='$user_id')";
+		
+		$this->connect->query( $sql );
+		
+	}
+	
 	
 	private function get_next_sms( $user_id ){
 		

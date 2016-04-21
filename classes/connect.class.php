@@ -31,6 +31,15 @@ class Connect {
 		
 	} // end __construct 
 	
+	public function escape_string( $string ){
+		
+		// Connect to the database
+        $connection = $this->connect();
+		
+		return $connection->real_escape_string( $string );
+		
+	}
+	
 	public function query($query) {
 		
         // Connect to the database
@@ -62,6 +71,17 @@ class Connect {
 		} // end if
 		
 	} // end insert
+	
+	
+	public function update( $query ){
+		
+		// Connect to the database
+        $connection = $this->connect();
+		
+		// Query the database
+        $result = $connection->query( $query );
+		
+	}
 	
 	
 	public function select( $query ) {

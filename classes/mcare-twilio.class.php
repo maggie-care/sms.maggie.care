@@ -4,7 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/lib/twilio-php/Services/Twilio.php';
 
 class Mcare_Twilio {
 	
-	protected $numbers = array( '385-393-1713' , '385-222-3539' , '385-222-3430' );
+	protected $numbers = array( '3853931713' , '3852223539' , '3852223430' );
 	
 	protected static $client;
 	
@@ -35,13 +35,9 @@ class Mcare_Twilio {
 	
 	public function send_sms( $user_number, $message, $sms_number ){
 		
-		$from = ( $from ) ? $from : $this->get_number();
-		
 		$connect = $this->connect();
 		
-		//var_dump( $user_number . ', ' .  $sms_number . ', ' . $message ); 
-		
-		$sms = $connect->account->messages->sendMessage( $from , $number , $message );
+		$sms = $connect->account->messages->sendMessage( $sms_number , $user_number , $message );
 		
 	} // end send_sms
 	

@@ -42,81 +42,43 @@ class API_Invite_User {
 		
 			require_once $this->get_require_path() . 'classes/invite_request.class.php';
 			
-			var_dump( $account->get_acct_owner() );
-			
 			$user = new User();
 			
-			// Creates or sets a user
-			/*if ( $user->create_set_user( $this->get_user_settings() ) ){
+			if ( $user->create_set_user( $this->get_user_settings() ) ){
 				
 				if ( $sms_number = $account->add_user_to_account( $user->get_user_id() , array( 'role_id' => $user->get_role_id() ) ) ){
 					
 					$request = new Invite_Request();
 					
-					$request_settings = array(
-						'acct_id' => $account->get_acct_id(),
-						'user_id' => $user->get_user_id(), 
-					);
+					$request_settings = array();
 					
-					if ( $request->create_set( 'invite' , $request_settings ) ){
+					if ( $request->create_set( $account->get_acct_id() , 'invite' , $request_settings ) ){
+						
+						$request->insert_open_request( $account->get_acct_id(), $user->get_phone(), $sms_number, $user->get_user_id() );
+						
+						$account->add_request( $request->get_request_id() );
 						
 						$owner = $account->get_acct_owner();
 						
-						//$request->send( $user->get_phone() , $sms_number , array( 'owner' => $owner->get_name() ) );
+						$request->send( $user->get_phone() , $sms_number , array( 'owner' => $owner->get_name() ) );
 						
 					} else {
 						
-						echo 'Could not create request';
+						echo 'could not send invite';
 						
-					};
+					} // end if
 					
-				} else {
+				} else {	
 					
-					echo 'Could not add user to account';
-				}
-				
-				//if ( $request->invite_user( $account , $user ) ){
-				//} else {
-				//}
+					echo 'could not add user to account';
+					
+				}// end if
 				
 			} else {
 				
-				echo 'user not created';
+				echo 'could not create user';
 				
-			}*/
-			
-			//require_once $this->get_require_path() . 'classes/user.class.php';
-				
-			//$user = new User();
-			
-			//if ( ! $user->set_user_by_phone( $_GET['phone'] ) ){
-				
-				//echo json_encode( array( 'status' => 1, 'response' => 'We\'ve invited ' . $_GET['name'] . ' to your network' ) );
-				
-			//} else {
-				
-				//$account->invite_user( $user );
-				
-				//echo json_encode( array( 'status' => 1, 'response' => 'We\'ve found ' . $user->get_name() . ' and invited them to your network' ) );
-				
-			//} // end if
-			
-			/*$user_settings = $user->user_get_settings();
-			
-			if ( $user_settings ){
-				
-				$user->invite_user( $account, $user_settings );
-				
-			} else {
-				
-				$msg = array(
-					'status' => 0,
-					'response' => 'Sorry, we need more info on this user',  
-				);
-				
-				echo json_encode( $msg );
-				
-			}// end if*/
+			}// end if */
 			
 		} else {
 			

@@ -33,29 +33,31 @@ class User {
 	
 	public function set_user_db( $user ){
 		
-		$this->user_id = $user['user_id'];
+		if ( ! empty( $user['user_id'] ) ) $this->user_id = $user['user_id'];
 		
-		$this->name = $user['user_name'];
+		if ( ! empty( $user['user_name'] ) ) $this->name = $user['user_name'];
 				
-		$this->phone = $user['phone'];
+		if ( ! empty( $user['phone'] ) ) $this->phone = $user['phone'];
 			
-		$this->created  = $user['created'];
+		if ( ! empty( $user['created'] ) ) $this->created  = $user['created'];
+		
+		if ( ! empty( $user['acct_id'] ) ) $this->acct_id  = $user['acct_id'];
+		
+		if ( ! empty( $user['role_id'] ) ) $this->role_id  = $user['role_id'];
+		
+		if ( ! empty( $user['status'] ) ) $this->status  = $user['status'];
+		
+		if ( ! empty( $user['sms_number'] ) ) $this->sms_number  = $user['sms_number'];
 		
 	} // end set_user_db
 	
-	public function set_user_by_id( $user_id , $acct_id = false ){
+	public function set_user_by_id( $user_id ){
 		
 		$user = $this->connect->select( "SELECT * FROM maggiecare_users WHERE user_id='$user_id'" );
 		
 		if ( $user ){
 			
 			$this->set_user_db( $user[0] );
-			
-			if ( $acct_id ){
-				
-				$this->set_user_acct( $acct_id );
-				
-			} // end if
 			
 			return true;
 			
@@ -67,14 +69,6 @@ class User {
 		
 	} // end set_user_by_id
 	
-	public function set_user_acct( $acct_id ){
-		
-		$user_id = $this->get_user_id();
-		
-		$acct = $this->connect->select( "SELECT * FROM maggiecare_acct_users WHERE user_id='$user_id' AND acct_id='$acct_id'" );
-		
-		
-	} 
 	
 	
 	public function create_set_user( $user_settings ){
@@ -84,8 +78,6 @@ class User {
 		$this->get_clean_phone( $phone );
 		
 		if ( $user = $this->get_user_by_phone( $phone ) ){
-			
-			echo 'User found by phone';
 			
 			$this->set_user_db( $user );
 			
