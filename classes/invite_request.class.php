@@ -8,7 +8,7 @@ class Invite_Request extends Request {
 	
 	public function send( $phone , $sms_number , $settings ){
 		
-		$msg = $settings['owner'] . ' would like to invite you to their caregiver network. Reply "YES" to join or "NO" to decline. Learn more at https://maggie.care';
+		$msg = $settings['owner'] . ' would like to invite you to his/her caregiver network. Reply "YES" to join or "NO" to decline. Learn more at http://maggie.care';
 		
 		$this->twilio->send_sms( $phone, $msg, $sms_number );
 		
@@ -62,8 +62,9 @@ class Invite_Request extends Request {
 		
 		$name = explode( ' ' , $owner->get_name() );
 	
-		$msg = 'Way to show some love. MaggieCare has notified ' . $name[0] . ' that you\'re a part of their network. 
-					You\'ll be notified if ' . $name[0] . ' has a need and be given a chance to help.';
+		$msg = 'Way to show some love. MaggieCare has notified ' . $name[0] . ' that you\'re a part of his/her network. You\'ll be notified if ' . $name[0] . ' needs help.';
+		
+		//$this->twilio->send_sms( $response->get_from(), $msg, $response->get_to() );
 		
 		return $msg;
 		

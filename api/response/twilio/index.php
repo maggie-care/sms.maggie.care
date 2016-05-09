@@ -17,9 +17,9 @@ class API_Response_Text {
 		
 		$this->require_path = $_SERVER["DOCUMENT_ROOT"] . '/';
 		
-		/*header("content-type: text/xml");
+		header("content-type: text/xml");
 		
-    	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";*/
+    	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		
 		$this->do_response();
 		
@@ -42,6 +42,8 @@ class API_Response_Text {
 		if ( $request ){
 			
 			$response_msg = $request->do_request( $response );
+			
+			//$response_msg = '';
 			
 		} else {
 			
