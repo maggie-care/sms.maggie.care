@@ -211,4 +211,56 @@ class Mcare_Account {
 	} // end get_next_sms
 	
 	
+	public function verify_access( $acct_id , $access_key ){
+		
+		require_once 'connect.class.php';
+		
+		$connect = new Connect();
+		
+		$sql = "SELECT * FROM maggiecare_acct WHERE id='$acct_id'";
+		
+		$acct = $connect->select( $sql );
+		
+		if ( $acct[0]['api_key'] == $access_key ){
+			
+			$this->acct_id = $acct[0]['id'];
+			
+			$this->opened = $acct[0]['open'];
+			
+			$this->api_key = $acct[0]['api_key'];
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		}
+		
+	} // end verify_access
+	
+	
+	public function get_account_array(){
+		
+		$account = array();
+		
+		$account['acct_id'] = $this->get_acct_id();
+		
+		foreach( $this->get_users() as $user ){
+			
+			$account['users'][ $user->get_user_id() ]['ID'] = $user->get_user_id();
+			
+			$account['users'][ $user->get_user_id() ]['role_id'] = $user->get_role_id();
+			
+			$account['users'][ $user->get_user_id() ]['name'] = $user->get_name();
+			
+			
+			
+		} // end foreach
+		
+		return $account;
+		
+	}
+	
+	
 }
